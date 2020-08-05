@@ -1,5 +1,6 @@
+import { notFound, errorHandler } from './middlewares'
 import 'reflect-metadata'
-import express, { NextFunction, Request, Response } from 'express'
+import express from 'express'
 import { ApolloServer } from 'apollo-server-express'
 import { buildSchema } from 'type-graphql'
 import { AuthResolvers } from './api/auth-resolvers'
@@ -25,20 +26,9 @@ const boostrap = async () => {
 
   apolloServer.applyMiddleware({ app })
 
-  app.use((req, res, next) => {
-    const error = new Error(`Not found - ${req.originalUrl}`)
-    res.status(404)
-    next(error)
-  })
+  app.use(notFound)
 
-  app.use((error: Error, _req: Request, res: Response, _next: NextFunction) => {
-    const statusCode = res.statusCode === 200 ? 500 : res.statusCode
-    res.status(statusCode)
-    res.json({
-      message: error.message,
-      stack: process.env.NODE_ENV === 'production' ? '' : error.stack
-    })
-  })
+  app.use(errorHandler)
 
   app.listen(port, () => {
     console.log(`Listening on port http://localhost:${port}`)
