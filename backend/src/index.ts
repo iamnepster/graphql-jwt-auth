@@ -1,5 +1,6 @@
-import { notFound, errorHandler } from './middlewares'
 import 'reflect-metadata'
+import 'dotenv/config'
+import { notFound, errorHandler } from './middlewares'
 import express from 'express'
 import { ApolloServer } from 'apollo-server-express'
 import { buildSchema } from 'type-graphql'
@@ -21,7 +22,8 @@ const boostrap = async () => {
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
       resolvers: [AuthResolvers]
-    })
+    }),
+    context: ({ req, res }) => ({ req, res })
   })
 
   apolloServer.applyMiddleware({ app })
