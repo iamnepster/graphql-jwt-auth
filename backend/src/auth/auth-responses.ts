@@ -11,3 +11,12 @@ export class AuthRefreshToken {
   @Field()
   refreshToken: string
 }
+
+@ObjectType()
+export class AuthResponse {
+  @Field({ nullable: true })
+  message?: string
+
+  @Field({ nullable: true })
+  token?: AuthAccessToken
+}
