@@ -1,3 +1,3 @@
-## Das offizielle Azubi Kalender Repo
+## GraphQL JWT Authentication 🔓
 
-In diesem Repo befinden sich das Front- & Backend des Azubikalenders
+Basic JWT Authentication wiht GraphQL
